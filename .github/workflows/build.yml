@@ -26,7 +26,7 @@ jobs:
       - name: List files
         run: |
           echo "List of files in workspace:"
-          ls -R /github/workspace
+          ls -R .
 
       - name: SonarCloud Scan
         run: mvn sonar:sonar
