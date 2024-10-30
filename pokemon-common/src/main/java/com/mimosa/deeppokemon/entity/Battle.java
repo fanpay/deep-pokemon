@@ -46,7 +46,7 @@ public class Battle implements Serializable {
     protected List<String> players;
     // 胜方
     protected String winner;
-    // 排名
+
     protected float avageRating;
     // 对局记录
     @Transient
