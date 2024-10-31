@@ -25,17 +25,35 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           cache: maven
-      - name: List files
+      #- name: List files
+      #  run: |
+      #    echo "List of files in workspace:"
+      #    ls -R .
+
+      - name: Build with Maven
+        run: mvn -B clean verify --file pom.xml
+  
+      # Verificar si las clases se generaron en las rutas esperadas
+      - name: List target directories for debugging
         run: |
-          echo "List of files in workspace:"
-          ls -R .
+          echo "Listing eureka-server target/classes:"
+          ls -R ./eureka-server/target/classes || echo "Directory not found!"
+          
+          echo "Listing pokemon-common target/classes:"
+          ls -R ./pokemon-common/target/classes || echo "Directory not found!"
+          
+          echo "Listing pokemon-crawler target/classes:"
+          ls -R ./pokemon-crawler/target/classes || echo "Directory not found!"
+          
+          echo "Listing pokemon-portal target/classes:"
+          ls -R ./pokemon-portal/target/classes || echo "Directory not found!"
     
       # Ejecuta el análisis de SonarQube como parte de la compilación de Maven
       - name: Build and analyze with Maven
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          mvn -B clean verify sonar:sonar \
+          mvn -B sonar:sonar \
             -Dsonar.projectKey=fanpay_deep-pokemon \
             -Dsonar.organization=fanpay \
             -Dsonar.host.url=https://sonarcloud.io \
