@@ -10,9 +10,9 @@ name: deep-pokemon CI with Maven
 
 on:
   push:
-    branches: [ "main", "refact" ]
+    branches: [ "master", "refact" ]
   pull_request:
-    branches: [ "main", "refact" ]
+    branches: [ "master", "refact" ]
 
 jobs:
   build:
