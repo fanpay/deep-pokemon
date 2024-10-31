@@ -58,7 +58,7 @@ jobs:
             -Dsonar.organization=fanpay \
             -Dsonar.host.url=https://sonarcloud.io \
             -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
-            -Dsonar.java.binaries=**/target/classes
+            -Dsonar.java.binaries=./**/target/**
 
       - name: Publish Test Report
         uses: mikepenz/action-junit-report@v4
