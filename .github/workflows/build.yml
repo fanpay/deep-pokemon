@@ -30,8 +30,16 @@ jobs:
           echo "List of files in workspace:"
           ls -R .
     
-      - name: Build with Maven
-        run: mvn -B package --file pom.xml
+      # Ejecuta el análisis de SonarQube como parte de la compilación de Maven
+      - name: Build and analyze with Maven
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          mvn -B clean verify sonar:sonar \
+            -Dsonar.projectKey=your_project_key \
+            -Dsonar.organization=your_organization \
+            -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
+            -Dsonar.java.binaries=./eureka-server/target/classes,./pokemon-common/target/classes,./pokemon-crawler/target/classes,./pokemon-portal/target/classes
 
       - name: Publish Test Report
         uses: mikepenz/action-junit-report@v4
@@ -63,8 +71,8 @@ jobs:
           echo "coverage-all = ${{ steps.jacoco.outputs.coverage-overall }}"
           echo "coverage-changed-files = ${{ steps.jacoco.outputs.coverage-changed-files }}"
 
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      #- name: SonarCloud Scan
+      #  uses: SonarSource/sonarcloud-github-action@master
+      #  env:
+      #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+      #    SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
