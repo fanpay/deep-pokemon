@@ -57,7 +57,7 @@ jobs:
             -Dsonar.projectKey=fanpay_deep-pokemon \
             -Dsonar.organization=fanpay \
             -Dsonar.host.url=https://sonarcloud.io \
-            -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+            -Dsonar.token=${{ secrets.SONAR_TOKEN }}
 
       - name: Publish Test Report
         uses: mikepenz/action-junit-report@v4
